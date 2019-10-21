@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">FakeLine</string>
+    <string name="home">主頁</string>
+    <string name="talk">聊天</string>
+    <string name="article">貼文串</string>
+    <string name="today">TODAY</string>
+    <string name="wallet">錢包</string>
+</resources>

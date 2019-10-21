@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/modifyMessageMenuItem"
+        android:title="編輯訊息" />
+    <item
+        android:id="@+id/sortTalkRoomMenuItem"
+        android:title="聊天室排序" />
+    <item
+        android:id="@+id/allMarkReadMenuItem"
+        android:title="全部標記為已讀" />
+</menu>

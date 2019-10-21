@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/homeMenu"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/home" />
+    <item
+        android:id="@+id/talkMenu"
+        android:icon="@drawable/ic_chat_bubble_outline_black_24dp"
+        android:title="@string/talk" />
+    <item
+        android:id="@+id/articleMenu"
+        android:icon="@drawable/ic_access_time_black_24dp"
+        android:title="@string/article" />
+    <item
+        android:id="@+id/todayMenu"
+        android:icon="@drawable/ic_description_black_24dp"
+        android:title="@string/today" />
+    <item
+        android:id="@+id/walletMenu"
+        android:icon="@drawable/ic_monetization_on_black_24dp"
+        android:title="@string/wallet" />
+</menu>
