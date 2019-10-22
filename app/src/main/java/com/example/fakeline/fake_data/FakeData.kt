@@ -3,8 +3,6 @@ package com.example.fakeline.fake_data
 import com.example.fakeline.R
 import kotlin.random.Random
 
-class FakeData {
-}
 class MessageList{
     companion object{
         var messageList=FakeMessages.defaultList

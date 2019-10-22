@@ -17,7 +17,6 @@ import kotlinx.android.synthetic.main.activity_modify_message.*
 class ModifyMessageActivity : AppCompatActivity() {
 
     lateinit var recycleViewAdapter:MessageModifyRecycleViewAdapter
-    lateinit var messageListViewModel : MessageListViewodel
     lateinit var linearLayoutManager :LinearLayoutManager
     lateinit var selectItemList:MutableList<Int>
     @RequiresApi(Build.VERSION_CODES.N)
@@ -43,7 +42,6 @@ class ModifyMessageActivity : AppCompatActivity() {
                 }
                 recycleViewAdapter.notifyDataSetChanged()
             }
-
         })
         messageModifyRecycleView.adapter=recycleViewAdapter
         deleteButton.setOnClickListener {
@@ -52,7 +50,6 @@ class ModifyMessageActivity : AppCompatActivity() {
                     it.id in selectItemList
                 }
                 selectItemList.clear()
-
                 this.setResult(  Activity.RESULT_OK)
                 this.finish()
             }

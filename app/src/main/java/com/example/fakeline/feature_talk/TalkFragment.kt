@@ -3,7 +3,6 @@ package com.example.fakeline.feature_talk
 
 import android.app.Activity
 import android.app.AlertDialog
-import android.app.Dialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
@@ -13,40 +12,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fakeline.R
 import com.example.fakeline.feature_talk.adapter.MessageRecycleViewAdapter
 import com.example.fakeline.fake_data.FakeMessages
 import com.example.fakeline.fake_data.MessageList
-import com.example.fakeline.feature_talk.adapter.SortActivity
-import com.example.fakeline.view_model.MessageListViewodel
 import kotlinx.android.synthetic.main.fragment_talk.view.*
 
 class TalkFragment : Fragment() {
-//    lateinit var messageListViewModel : MessageListViewodel
     private lateinit var rootView:View
     lateinit var messageRecycleViewAdapter: MessageRecycleViewAdapter
     var messageList= mutableListOf<FakeMessages>()
     lateinit var mLinearLayoutManager: LinearLayoutManager
     lateinit var isSelectItemList: MutableList<Int>
-//    lateinit var observer :Observer<MutableList<FakeMessages>>
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         messageList= MessageList.messageList
-        // Inflate the layout for this fragment
-//        observer= Observer {
-//            messageList=it
-//            messageRecycleViewAdapter.UpdateData(messageList)
-//        }
-//        messageListViewModel= ViewModelProviders.of(this.activity!!).get(MessageListViewodel::class.java)
-//        messageListViewModel.getMessageList().observe(this.activity!!,observer)
-//        messageListViewModel.setMessageList(FakeMessages.defaultList)
         isSelectItemList=mutableListOf<Int>()
-
         rootView= inflater.inflate(R.layout.fragment_talk, container, false)
         rootView.menuImageView.setOnClickListener {
             popuMenu(rootView.menuImageView)
@@ -57,7 +41,6 @@ class TalkFragment : Fragment() {
                 if(messageList[position].isSelect==true) isSelectItemList.add(messageList[position].id)
                 else isSelectItemList.remove(messageList[position].id)
             }
-
         })
         mLinearLayoutManager = LinearLayoutManager(this.context)
         rootView.messageRecycleView.layoutManager = mLinearLayoutManager
@@ -77,7 +60,8 @@ class TalkFragment : Fragment() {
                     startActivityForResult(intentModifyMessage,0)
                 }
                 R.id.sortTalkRoomMenuItem ->{
-                    var intentSortMessage= Intent(this.context,SortActivity::class.java)
+                    var intentSortMessage= Intent(this.context,
+                        SortActivity::class.java)
                     startActivityForResult(intentSortMessage,1)
                 }
                 R.id.allMarkReadMenuItem ->{
@@ -125,11 +109,10 @@ class TalkFragment : Fragment() {
                     messageRecycleViewAdapter.UpdateData(MessageList.messageList)
                 }
             }
-//            2->{
-//                if(resultCode== Activity.RESULT_OK) {
-//
-//                }
-//            }
         }
+    }
+    companion object {
+        @JvmStatic
+        fun newInstance() = TalkFragment()
     }
 }

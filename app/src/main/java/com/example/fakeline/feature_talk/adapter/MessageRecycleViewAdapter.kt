@@ -20,8 +20,7 @@ class MessageRecycleViewAdapter(
     private val messageList: MutableList<FakeMessages>
 ) :
     RecyclerView.Adapter<MessageRecycleViewAdapter.messageViewHolder>() {
-    var selectPosition:Int=-1
-    lateinit var mMessageList: MutableList<FakeMessages>
+    var mMessageList: MutableList<FakeMessages>
     val inflater: LayoutInflater = LayoutInflater.from(context)
     var mOnItemCheckListener: OnItemCheckListener? = null
     var mCheckBoxIsVisible=View.INVISIBLE
@@ -51,13 +50,9 @@ class MessageRecycleViewAdapter(
         var unreadImageView= view.findViewById<ImageView>(id.unreadImageView)
         var unreadFrameLayout= view.findViewById<FrameLayout>(id.unreadFrameLayout)
 
-//        var selectCheckBox = view.findViewById<CheckBox>(id.selectCheckBox)
-
         fun bind(position: Int){
             val selectColor = context.resources.getDrawable(R.color.colorUnread)
             val playWithBackground = LayerDrawable(arrayOf(selectColor))
-//            selectCheckBox.visibility=mCheckBoxIsVisible
-//            unreadFrameLayout.visibility=mUnreadIsVisible
             Glide.with(context!!)
                 .load(mMessageList[position].icon)
                 .apply(RequestOptions.circleCropTransform())
@@ -71,41 +66,16 @@ class MessageRecycleViewAdapter(
             dateTextView.text=mMessageList[position].date
             unreadTextView.text=mMessageList[position].unread.toString()
             if(mMessageList[position].unread==0)  unreadFrameLayout.visibility= View.INVISIBLE
-//            selectCheckBox.setOnClickListener {
-////               it.isSelected!=it.isSelected
-//                selectPosition=position
-//                mMessageList[position].isSelect = selectCheckBox.isChecked==true
-//                notifyDataSetChanged()
-//                mOnItemCheckListener!!.onCheck(position, mMessageList[position].id)
-//            }
         }
     }
-        fun UpdateData(mList:MutableList<FakeMessages>){
+    fun UpdateData(mList:MutableList<FakeMessages>){
         mMessageList=mList
         notifyDataSetChanged()
     }
-//    fun RefreshData(){
-//        mMessageList.clear()
-//        notifyDataSetChanged()
-//
-//    }
     interface OnItemCheckListener {
         fun onCheck(position:Int,id:Int)
     }
     fun setOnItemCheckListener(mOnItemCheckListener: OnItemCheckListener) {
         this.mOnItemCheckListener = mOnItemCheckListener
-    }
-    fun checkBoxisVisible(mBoolean: Boolean){
-        when(mBoolean){
-            true ->{
-                mCheckBoxIsVisible=View.VISIBLE
-                mUnreadIsVisible=View.INVISIBLE
-            }
-            false->{
-                mCheckBoxIsVisible=View.GONE
-                mUnreadIsVisible=View.VISIBLE
-            }
-        }
-        notifyDataSetChanged()
     }
 }

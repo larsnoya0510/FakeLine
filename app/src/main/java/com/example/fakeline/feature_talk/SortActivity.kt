@@ -1,4 +1,4 @@
-package com.example.fakeline.feature_talk.adapter
+package com.example.fakeline.feature_talk
 
 import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity

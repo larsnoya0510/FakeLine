@@ -20,12 +20,12 @@ class MessageModifyRecycleViewAdapter(
     private val messageList: MutableList<FakeMessages>
 ) :
     RecyclerView.Adapter<MessageModifyRecycleViewAdapter.messageViewHolder>() {
-    var selectPosition:Int=-1
-    lateinit var mMessageList: MutableList<FakeMessages>
+     var mMessageList: MutableList<FakeMessages>
     val inflater: LayoutInflater = LayoutInflater.from(context)
     var mOnItemCheckListener: OnItemCheckListener? = null
     var mCheckBoxIsVisible= View.INVISIBLE
     var mUnreadIsVisible=View.VISIBLE
+
     init{
         mMessageList=messageList
     }
@@ -72,12 +72,7 @@ class MessageModifyRecycleViewAdapter(
             dateTextView.text=mMessageList[position].date
             unreadTextView.text=mMessageList[position].unread.toString()
             selectCheckBox.isChecked=mMessageList[position].isSelect
-//            if(mMessageList[position].unread==0)  unreadFrameLayout.visibility= View.INVISIBLE
             selectCheckBox.setOnClickListener {
-////               it.isSelected!=it.isSelected
-////                selectPosition=position
-//                mMessageList[position].isSelect = selectCheckBox.isChecked==true
-//                notifyDataSetChanged()
                 mOnItemCheckListener!!.onCheck(position, mMessageList[position].id)
             }
         }
@@ -86,28 +81,10 @@ class MessageModifyRecycleViewAdapter(
         mMessageList=mList
         notifyDataSetChanged()
     }
-    //    fun RefreshData(){
-//        mMessageList.clear()
-//        notifyDataSetChanged()
-//
-//    }
     interface OnItemCheckListener {
         fun onCheck(position:Int,id:Int)
     }
     fun setOnItemCheckListener(mOnItemCheckListener: OnItemCheckListener) {
         this.mOnItemCheckListener = mOnItemCheckListener
-    }
-    fun checkBoxisVisible(mBoolean: Boolean){
-        when(mBoolean){
-            true ->{
-                mCheckBoxIsVisible=View.VISIBLE
-                mUnreadIsVisible=View.INVISIBLE
-            }
-            false->{
-                mCheckBoxIsVisible=View.GONE
-                mUnreadIsVisible=View.VISIBLE
-            }
-        }
-        notifyDataSetChanged()
     }
 }

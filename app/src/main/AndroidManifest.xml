@@ -9,11 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".feature_talk.adapter.SortActivity"
+        <activity android:name=".feature_talk.SortActivity"
             android:theme="@style/AppDialogTheme"
+            android:screenOrientation="portrait"
             ></activity>
-        <activity android:name=".feature_talk.ModifyMessageActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".feature_talk.ModifyMessageActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
