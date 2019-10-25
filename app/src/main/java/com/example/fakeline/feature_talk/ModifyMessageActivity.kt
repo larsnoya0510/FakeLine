@@ -8,10 +8,9 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fakeline.R
-import com.example.fakeline.fake_data.FakeMessages
+
 import com.example.fakeline.fake_data.MessageList
 import com.example.fakeline.feature_talk.adapter.MessageModifyRecycleViewAdapter
-import com.example.fakeline.view_model.MessageListViewodel
 import kotlinx.android.synthetic.main.activity_modify_message.*
 
 class ModifyMessageActivity : AppCompatActivity() {
@@ -33,12 +32,12 @@ class ModifyMessageActivity : AppCompatActivity() {
                 if(recycleViewAdapter.mMessageList[position].isSelect==false)  {
                     recycleViewAdapter.mMessageList[position].isSelect=true
                     if(!selectItemList.contains(id)) selectItemList.add(id)
-                    println("***ADD ${selectItemList.toString()}")
+//                    println("***ADD ${selectItemList.toString()}")
                 }
                 else {
                     recycleViewAdapter.mMessageList[position].isSelect=false
                     if(selectItemList.contains(id)) selectItemList.remove(id)
-                    println("***REMOVE  ${selectItemList.toString()}")
+//                    println("***REMOVE  ${selectItemList.toString()}")
                 }
                 recycleViewAdapter.notifyDataSetChanged()
             }
@@ -57,5 +56,8 @@ class ModifyMessageActivity : AppCompatActivity() {
         backImageView.setOnClickListener {
             this.finish()
         }
+    }
+    override fun onBackPressed() {
+//        super.onBackPressed()
     }
 }

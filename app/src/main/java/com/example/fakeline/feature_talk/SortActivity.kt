@@ -21,4 +21,7 @@ class SortActivity : AppCompatActivity() {
             this.finish()
         }
     }
+    override fun onBackPressed() {
+//        super.onBackPressed()
+    }
 }

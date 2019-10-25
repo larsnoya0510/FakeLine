@@ -3,26 +3,19 @@ package com.example.fakeline
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
 import com.example.fakeline.utilities.FragmentPool
-import com.example.fakeline.view_model.MessageListViewodel
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-//    lateinit var messageListViewModel : MessageListViewodel
     lateinit var mFragmentPool: FragmentPool
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        mFragmentPool = FragmentPool()
-//        init()
+
         initView()
         initFragment()
-        bottomNavigationView.selectedItemId=R.id.talkMenu
+        bottomNavigationView.selectedItemId=R.id.talkMenu //轉向特定頁面
     }
-//    fun init(){
-//        messageListViewModel= ViewModelProviders.of(this!!).get(MessageListViewodel::class.java)
-//    }
     private fun initFragment() {
         var action = this.supportFragmentManager!!.beginTransaction()
         action.replace(
@@ -42,6 +35,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initView() {
+        mFragmentPool = FragmentPool() //初始化可用fragment資源
         bottomNavigationView.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.homeMenu -> {
@@ -70,6 +64,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
+    //擋後退鍵
+    override fun onBackPressed() {
+//        super.onBackPressed()
+    }
 }
 

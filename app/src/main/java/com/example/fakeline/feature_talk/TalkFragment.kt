@@ -29,26 +29,25 @@ class TalkFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        messageList= MessageList.messageList
-        isSelectItemList=mutableListOf<Int>()
         rootView= inflater.inflate(R.layout.fragment_talk, container, false)
-        rootView.menuImageView.setOnClickListener {
-            popuMenu(rootView.menuImageView)
-        }
-        messageRecycleViewAdapter=MessageRecycleViewAdapter(this.context!!,messageList)
-        messageRecycleViewAdapter.setOnItemCheckListener(object : MessageRecycleViewAdapter.OnItemCheckListener{
-            override fun onCheck(position: Int, id: Int) {
-                if(messageList[position].isSelect==true) isSelectItemList.add(messageList[position].id)
-                else isSelectItemList.remove(messageList[position].id)
-            }
-        })
-        mLinearLayoutManager = LinearLayoutManager(this.context)
-        rootView.messageRecycleView.layoutManager = mLinearLayoutManager
-        rootView.messageRecycleView.adapter=messageRecycleViewAdapter
-        rootView.messageRecycleView.setHasFixedSize(true)
+        initView(rootView)
         return rootView
     }
 
+    private fun initView(rootView:View) {
+        messageList = MessageList.messageList
+        isSelectItemList = mutableListOf<Int>()
+        rootView.menuImageView.setOnClickListener {
+            popuMenu(rootView.menuImageView)
+        }
+        messageRecycleViewAdapter = MessageRecycleViewAdapter(this.context!!, messageList)
+        mLinearLayoutManager = LinearLayoutManager(this.context)
+        rootView.messageRecycleView.layoutManager = mLinearLayoutManager
+        rootView.messageRecycleView.adapter = messageRecycleViewAdapter
+        rootView.messageRecycleView.setHasFixedSize(true)
+    }
+
+    //自定物件選單，PopupMenu可以指定物件綁定menu並設定出現位置
     fun popuMenu(view: View){
         val popupMenu = PopupMenu(this.context!!, view)
         popupMenu.gravity= Gravity.BOTTOM
@@ -56,31 +55,14 @@ class TalkFragment : Fragment() {
         popupMenu.setOnMenuItemClickListener {
             when(it.itemId){
                 R.id.modifyMessageMenuItem ->{
-                    var intentModifyMessage= Intent(this.context,ModifyMessageActivity::class.java)
-                    startActivityForResult(intentModifyMessage,0)
+                    openModifyMessageActivity()
                 }
                 R.id.sortTalkRoomMenuItem ->{
-                    var intentSortMessage= Intent(this.context,
-                        SortActivity::class.java)
-                    startActivityForResult(intentSortMessage,1)
+//                    openSortActivity()  //兩種方式，Activity也可以當Dialog用
+                    openSortDialog()
                 }
                 R.id.allMarkReadMenuItem ->{
-                    var dialog = AlertDialog.Builder(this.context)
-                        .setMessage("要將所有訊息標為已讀嗎?")
-                        .setPositiveButton("標為已讀",object : DialogInterface.OnClickListener{
-                            override fun onClick(dialog: DialogInterface?, which: Int) {
-                                MessageList.messageList.forEach {
-                                    it.unread = 0
-                                }
-                                messageRecycleViewAdapter.UpdateData(MessageList.messageList)
-                            }
-                        })
-                        .setNegativeButton("取消",object : DialogInterface.OnClickListener{
-                            override fun onClick(dialog: DialogInterface?, which: Int) {
-                                dialog!!.dismiss()
-                            }
-                        })
-                        .show()
+                    openUnreadDialog()
                 }
             }
             false
@@ -91,14 +73,64 @@ class TalkFragment : Fragment() {
         popupMenu.show()
     }
 
+    private fun openUnreadDialog() {
+        var dialog = AlertDialog.Builder(this.context)
+            .setMessage("要將所有訊息標為已讀嗎?")
+            .setPositiveButton("標為已讀", object : DialogInterface.OnClickListener {
+                override fun onClick(dialog: DialogInterface?, which: Int) {
+                    MessageList.messageList.forEach {
+                        it.unread = 0
+                    }
+                    messageRecycleViewAdapter.UpdateData(MessageList.messageList)
+                }
+            })
+            .setNegativeButton("取消", object : DialogInterface.OnClickListener {
+                override fun onClick(dialog: DialogInterface?, which: Int) {
+                    dialog!!.dismiss()
+                }
+            })
+        dialog.show()
+    }
+
+    private fun openSortActivity() {
+        var intentSortMessage = Intent(this.context, SortActivity::class.java)
+        startActivityForResult(intentSortMessage, 1)
+    }
+
+    private fun openSortDialog() {
+        var dialog = AlertDialog.Builder(this.context)
+            .setItems(arrayOf<String>("收到的時間", "未讀訊息"), object : DialogInterface.OnClickListener {
+                override fun onClick(dialog: DialogInterface?, which: Int) {
+                    when (which) {
+                        0 -> {
+                            MessageList.messageList.sortWith(compareBy({ it.date }, { it.unread }))
+                            messageRecycleViewAdapter.UpdateData(MessageList.messageList)
+                        }
+                        1 -> {
+                            MessageList.messageList.sortWith(compareBy({ it.unread }, { it.date }))
+                            messageRecycleViewAdapter.UpdateData(MessageList.messageList)
+                        }
+                    }
+                }
+            })
+        dialog.show()
+    }
+
+    private fun openModifyMessageActivity() {
+        var intentModifyMessage = Intent(this.context, ModifyMessageActivity::class.java)
+        startActivityForResult(intentModifyMessage, 0)
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when(requestCode){
+            //處理MessageActivity事件
             0->{
                 if(resultCode== Activity.RESULT_OK) {
                     messageRecycleViewAdapter.UpdateData(MessageList.messageList)
                 }
             }
+            //處理SortActivity事件
             1->{
                 if(resultCode== Activity.RESULT_OK) {
                     MessageList.messageList.sortWith(compareBy({ it.date }, { it.unread}))

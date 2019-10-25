@@ -23,8 +23,6 @@ class MessageModifyRecycleViewAdapter(
      var mMessageList: MutableList<FakeMessages>
     val inflater: LayoutInflater = LayoutInflater.from(context)
     var mOnItemCheckListener: OnItemCheckListener? = null
-    var mCheckBoxIsVisible= View.INVISIBLE
-    var mUnreadIsVisible=View.VISIBLE
 
     init{
         mMessageList=messageList
