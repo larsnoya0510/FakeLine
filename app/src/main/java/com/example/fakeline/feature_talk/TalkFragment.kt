@@ -68,7 +68,6 @@ class TalkFragment : Fragment() {
             false
         }
         popupMenu.setOnDismissListener {
-
         }
         popupMenu.show()
     }

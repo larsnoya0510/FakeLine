@@ -32,7 +32,6 @@ class MainActivity : AppCompatActivity() {
         )
         action.commit()
     }
-
     private fun initView() {
         mFragmentPool = FragmentPool() //初始化可用fragment資源
         bottomNavigationView.setOnNavigationItemSelectedListener {
