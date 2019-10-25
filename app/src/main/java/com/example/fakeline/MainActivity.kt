@@ -11,7 +11,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         initView()
         initFragment()
         bottomNavigationView.selectedItemId=R.id.talkMenu //轉向特定頁面
