@@ -6,6 +6,9 @@ import kotlin.random.Random
 class MessageList{
     companion object{
         var messageList=FakeMessages.defaultList
+        var keywordList =arrayListOf("NBA","12強","世界大賽","星宇航空","川普","黑豹旗","香港獨立","反送中","2020")
+        var recentRecordList = mutableListOf<String>()
+        var recentRecordEnable:Boolean=false
     }
 }
 data class FakeMessages(
@@ -15,7 +18,8 @@ data class FakeMessages(
     var userMessage: String,
     var date: String,
     var unread: Int,
-    var isSelect:Boolean
+    var isSelect:Boolean,
+    var keyword:String
 ) {
     companion object {
         val iconArray = intArrayOf(
@@ -33,7 +37,7 @@ data class FakeMessages(
         val defaultList: MutableList<FakeMessages>
             get() {
                 val dataList = mutableListOf<FakeMessages>()
-                for (i in 0 .. 49) {
+                for (i in 0 .. 9) {
                     dataList.add(
                         FakeMessages(
                             i,
@@ -42,7 +46,8 @@ data class FakeMessages(
                             "Message$i : this is test message for Line Test use.",
                             "${String.format("%02d", Random.nextInt(1,12))}/${String.format("%02d", Random.nextInt(1,31))}",
                             Random.nextInt(0,99),
-                            false
+                            false,
+                            ""
                         )
                     )
                 }
@@ -50,4 +55,6 @@ data class FakeMessages(
             }
     }
 }
+
+
 

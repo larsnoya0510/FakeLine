@@ -13,10 +13,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.fakeline.MainActivity
 import com.example.fakeline.R
 import com.example.fakeline.feature_talk.adapter.MessageRecycleViewAdapter
 import com.example.fakeline.fake_data.FakeMessages
 import com.example.fakeline.fake_data.MessageList
+import com.example.fakeline.feature_talk.search.SearchActivity
 import kotlinx.android.synthetic.main.fragment_talk.view.*
 
 class TalkFragment : Fragment() {
@@ -40,11 +42,18 @@ class TalkFragment : Fragment() {
         rootView.menuImageView.setOnClickListener {
             popuMenu(rootView.menuImageView)
         }
+        rootView.searcImageView.setOnClickListener { openSearchActivity() }
         messageRecycleViewAdapter = MessageRecycleViewAdapter(this.context!!, messageList)
         mLinearLayoutManager = LinearLayoutManager(this.context)
         rootView.messageRecycleView.layoutManager = mLinearLayoutManager
         rootView.messageRecycleView.adapter = messageRecycleViewAdapter
         rootView.messageRecycleView.setHasFixedSize(true)
+    }
+
+    private fun openSearchActivity() {
+        var openSearchIntent=Intent(this.context,
+            SearchActivity::class.java)
+        startActivity(openSearchIntent)
     }
 
     //自定物件選單，PopupMenu可以指定物件綁定menu並設定出現位置
@@ -127,6 +136,8 @@ class TalkFragment : Fragment() {
             0->{
                 if(resultCode== Activity.RESULT_OK) {
                     messageRecycleViewAdapter.UpdateData(MessageList.messageList)
+                    var act=activity as MainActivity
+                    act.setBadge()
                 }
             }
             //處理SortActivity事件
