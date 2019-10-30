@@ -90,6 +90,7 @@ class TalkFragment : Fragment() {
                         it.unread = 0
                     }
                     messageRecycleViewAdapter.UpdateData(MessageList.messageList)
+                    setBadge()
                 }
             })
             .setNegativeButton("取消", object : DialogInterface.OnClickListener {
@@ -98,6 +99,11 @@ class TalkFragment : Fragment() {
                 }
             })
         dialog.show()
+    }
+
+    private fun setBadge() {
+        var act = activity as MainActivity
+        act.setBadge()
     }
 
     private fun openSortActivity() {
@@ -136,8 +142,7 @@ class TalkFragment : Fragment() {
             0->{
                 if(resultCode== Activity.RESULT_OK) {
                     messageRecycleViewAdapter.UpdateData(MessageList.messageList)
-                    var act=activity as MainActivity
-                    act.setBadge()
+                    setBadge()
                 }
             }
             //處理SortActivity事件

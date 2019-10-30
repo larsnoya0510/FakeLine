@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".feature_talk.search.SearchActivity"></activity>
+        <activity android:name=".feature_talk.search.SearchActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"></activity>
         <activity
             android:name=".feature_talk.SortActivity"
             android:theme="@style/AppDialogTheme" />

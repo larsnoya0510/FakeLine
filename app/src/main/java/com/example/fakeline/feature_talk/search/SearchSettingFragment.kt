@@ -30,9 +30,6 @@ class SearchSettingFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        mStaggeredGridLayoutManager=StaggeredGridLayoutManager(4,StaggeredGridLayoutManager.VERTICAL)
-        mLinearLayoutManager=LinearLayoutManager(this.context)
         rootView= inflater.inflate(R.layout.fragment_search_setting, container, false)
 
         rootView.startAutoRecordTextView.setOnClickListener {
@@ -46,10 +43,14 @@ class SearchSettingFragment : Fragment() {
             recentRecordListViewModel.clearSearchMessageListLiveData()
             settingAutoRecordFeature(true,rootView)
         }
+        //viewmodel
         recentRecordListViewModel= ViewModelProviders.of(activity!!).get(RecentRecordViewModel::class.java)
         recentRecordListViewModel.getRecentRecordListLiveData().observe(activity!!,androidx.lifecycle.Observer {
             mRecentSearchRecordRecycleViewAdapter.UpdateData(it)
         })
+
+        mStaggeredGridLayoutManager=StaggeredGridLayoutManager(4,StaggeredGridLayoutManager.VERTICAL)
+        mLinearLayoutManager=LinearLayoutManager(this.context)
         mKeywordRecycleViewAdapter=KeywordRecycleViewAdapter(this.context!!,MessageList.keywordList)
         rootView.keywordRecycleView.layoutManager=mStaggeredGridLayoutManager
         rootView.keywordRecycleView.adapter=mKeywordRecycleViewAdapter
@@ -58,12 +59,12 @@ class SearchSettingFragment : Fragment() {
         mRecentSearchRecordRecycleViewAdapter.setOnDeleteItemCheckListener(object  : RecentSearchRecordRecycleViewAdapter.OnDeleteItemCheckListener{
             override fun onDelete(position: Int, recentSearch: String) {
                 recentRecordListViewModel.deleteSearchMessageListLiveData(recentSearch)
+                settingAutoRecordFeature(true,rootView)
             }
-
         })
         rootView.recentSearchRecordRecycleView.adapter=mRecentSearchRecordRecycleViewAdapter
         rootView.recentSearchRecordRecycleView.layoutManager=mLinearLayoutManager
-        //初始狀態
+        //畫面初始狀態
         settingAutoRecordFeature(MessageList.recentRecordEnable,rootView)
         return rootView
     }
@@ -85,7 +86,6 @@ class SearchSettingFragment : Fragment() {
                 rootView.stopSearchSettingConstraintLyout.visibility=View.VISIBLE
             }
             false->{
-
                 rootView.recentSearchRecordRecycleView.visibility=View.GONE
                 rootView.noRecentRecordTextView.visibility=View.VISIBLE
                 rootView.noRecentRecordTextView.text = "自動記錄功能停用中"

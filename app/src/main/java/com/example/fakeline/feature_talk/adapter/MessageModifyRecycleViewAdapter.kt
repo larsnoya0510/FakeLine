@@ -48,7 +48,6 @@ class MessageModifyRecycleViewAdapter(
         var unreadTextView = view.findViewById<TextView>(R.id.unreadTextView)
         var unreadImageView= view.findViewById<ImageView>(R.id.unreadImageView)
         var unreadFrameLayout= view.findViewById<FrameLayout>(R.id.unreadFrameLayout)
-
         var selectCheckBox = view.findViewById<CheckBox>(R.id.selectCheckBox)
 
         fun bind(position: Int){

@@ -37,12 +37,12 @@ data class FakeMessages(
         val defaultList: MutableList<FakeMessages>
             get() {
                 val dataList = mutableListOf<FakeMessages>()
-                for (i in 0 .. 9) {
+                for (i in 0 .. 19) {
                     dataList.add(
                         FakeMessages(
                             i,
                             FakeMessages.iconArray[Random.nextInt(0,9)],
-                            "Title${i+1}",
+                            "Title${i}",
                             "Message$i : this is test message for Line Test use.",
                             "${String.format("%02d", Random.nextInt(1,12))}/${String.format("%02d", Random.nextInt(1,31))}",
                             Random.nextInt(0,99),

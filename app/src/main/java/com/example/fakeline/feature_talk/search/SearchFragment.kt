@@ -20,21 +20,20 @@ class SearchFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         mSearchFragmentPool =(activity as SearchActivity).mSearchFragmentPool
+
         rootView= inflater.inflate(R.layout.fragment_search, container, false)
+        //設定tablayout
         initTablayoutView(rootView)
+
         rootView.categoryTabLayout.addOnTabSelectedListener(object :TabLayout.OnTabSelectedListener{
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-
-            }
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-
-            }
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
+            override fun onTabUnselected(tab: TabLayout.Tab?) {}
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 if(tab!=null && tab.text=="訊息"){
-                    replaceFragment(mSearchFragmentPool.mSearchInMessageFragment,"SearchInMessageFragment")
+                    replaceFragment(mSearchFragmentPool.mSearchInMessageFragment)
                 }
                 else if(tab!=null){
-                    replaceFragment(mSearchFragmentPool.mNotMatchFragment,"NotMatchFragment")
+                    replaceFragment(mSearchFragmentPool.mNotMatchFragment)
                 }
             }
         })
@@ -52,12 +51,11 @@ class SearchFragment : Fragment() {
         @JvmStatic
         fun newInstance() = SearchFragment()
     }
-    private fun replaceFragment(mFragment: Fragment,mTag:String) {
+    private fun replaceFragment(mFragment: Fragment) {
         var action = this.childFragmentManager!!.beginTransaction()
         action.replace(
             R.id.childFragmentContainerFrameLayout,
-            mFragment,
-            mTag
+            mFragment
         )
         action.commit()
     }

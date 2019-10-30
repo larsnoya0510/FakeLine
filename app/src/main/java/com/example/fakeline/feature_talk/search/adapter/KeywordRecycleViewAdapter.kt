@@ -16,6 +16,7 @@ class KeywordRecycleViewAdapter(
     var mkeywordList: MutableList<String>
     val inflater: LayoutInflater = LayoutInflater.from(context)
     var mOnItemCheckListener: OnItemCheckListener? = null
+
     init{
         mkeywordList=keywordList
     }

@@ -7,6 +7,7 @@ import com.example.fakeline.fake_data.FakeMessages
 
 class MessageViewModel:ViewModel() {
     var searchMessageListLiveData=MutableLiveData<MutableList<FakeMessages>>()
+
     fun setSearchMessageListLiveData(mList:MutableList<FakeMessages>){
         searchMessageListLiveData.value=mList
     }

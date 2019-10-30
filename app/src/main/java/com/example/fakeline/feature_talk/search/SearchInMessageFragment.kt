@@ -28,6 +28,7 @@ class SearchInMessageFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         var initList=mutableListOf<FakeMessages>()
+        //RecycleView
         mLinearLayoutManager=LinearLayoutManager(this.context)
         mSearchInMesageRecycleViewAdapter=SearchInMesageRecycleViewAdapter(this.context!!,initList)
         mSearchInMesageRecycleViewAdapter.setOnItemCheckListener(object : SearchInMesageRecycleViewAdapter.OnItemCheckListener{
@@ -38,6 +39,7 @@ class SearchInMessageFragment : Fragment() {
         rootView= inflater.inflate(R.layout.fragment_search_in_message, container, false)
         rootView.searchInMessageRecycleView.adapter=mSearchInMesageRecycleViewAdapter
         rootView.searchInMessageRecycleView.layoutManager=mLinearLayoutManager
+        //ViewModel
         recentRecordListViewModel= ViewModelProviders.of(activity!!).get(RecentRecordViewModel::class.java)
         messagesViewModel= ViewModelProviders.of(activity!!).get(MessageViewModel::class.java)
         messagesViewModel.getSearchMessageListLiveData().observe(activity!!,androidx.lifecycle.Observer {
