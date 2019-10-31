@@ -1,6 +1,8 @@
 package com.example.fakeline.feature_talk.search
 
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -33,11 +35,10 @@ class SearchSettingFragment : Fragment() {
         rootView= inflater.inflate(R.layout.fragment_search_setting, container, false)
 
         rootView.startAutoRecordTextView.setOnClickListener {
-            settingAutoRecordFeature(true,rootView)
+            createDialog("確定啟用自動記錄功能?",true,rootView)
         }
         rootView.stoptAutoRecordTextView.setOnClickListener {
-            recentRecordListViewModel.clearSearchMessageListLiveData()
-            settingAutoRecordFeature(false,rootView)
+            createDialog("確定停用自動記錄功能?",false,rootView)
         }
         rootView.removeAllTextView.setOnClickListener {
             recentRecordListViewModel.clearSearchMessageListLiveData()
@@ -99,5 +100,20 @@ class SearchSettingFragment : Fragment() {
     companion object {
         @JvmStatic
         fun newInstance() = SearchSettingFragment()
+    }
+    fun createDialog(mMessage:String,mEnable:Boolean,mView:View){
+        var dialog = AlertDialog.Builder(this.context)
+            .setMessage(mMessage)
+            .setPositiveButton("確定", object : DialogInterface.OnClickListener {
+                override fun onClick(dialog: DialogInterface?, which: Int) {
+                    settingAutoRecordFeature(mEnable,mView)
+                }
+            })
+            .setNegativeButton("取消", object : DialogInterface.OnClickListener {
+                override fun onClick(dialog: DialogInterface?, which: Int) {
+                    dialog!!.dismiss()
+                }
+            })
+        dialog.show()
     }
 }
